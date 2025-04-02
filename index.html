@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Surprise For You, Darling!</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* GLOBAL RESET & BASIC SETUP */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Roboto', sans-serif;
+      position: relative;
+      color: #4a2c2a;
+    }
+
+    /* ANIMATED EMOJI BACKGROUND */
+    #bgEmoji {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      font-size: 2rem;
+      line-height: 1.2;
+      opacity: 0.15;
+      white-space: pre-wrap;
+      pointer-events: none;
+      user-select: none;
+      animation: floatEmojis 20s ease-in-out infinite;
+    }
+    #bgEmoji::after {
+      content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
+      white-space: pre;
+    }
+    @keyframes floatEmojis {
+      0%   { transform: translate(0, 0); }
+      50%  { transform: translate(20px, 20px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* PAGE CONTAINERS (10 pages total) */
+    .page {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;               /* hidden by default */
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+    }
+    .visible {
+      display: flex;               /* show the current page */
+      flex-direction: column;      /* stack items vertically */
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* HEADINGS & PARAGRAPHS */
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.3em;
+      max-width: 800px;
+      margin: 10px auto;
+    }
+
+    /* BUTTONS */
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #a9446b;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    button:hover {
+      background-color: #922c50;
+      transform: scale(1.05);
+    }
+
+    /* PAGE-SPECIFIC STYLES */
+    /* Page 1: Floating "Click Here" Button */
+    #floatButton {
+      position: absolute;
+      top: 60%;
+      left: calc(50% - 50px);
+      padding: 10px 20px;
+      background-color: #a9446b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    /* Page 2: Container for "Yes" Buttons */
+    #yesContainer {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      margin-top: 30px;
+    }
+    .yesBtn {
+      position: absolute;
+      padding: 10px 20px;
+      background-color: #a9446b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* PAGE 3: BALLOONS & CAKE */
+    #page3 {
+      background: #ffd7e3;  /* lighter pink background */
+      overflow: hidden;     /* so balloons can float up */
+    }
+    /* Balloons float 1.3x faster => original ~10s => ~7.5s or 7.7s */
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh); }
+      100% { transform: translateY(-120vh); }
+    }
+    .balloon {
+      position: absolute;
+      width: 80px;
+      height: 100px;
+      border-radius: 50% 50% 45% 55%;
+      cursor: pointer;
+      /* We'll set random left positions & delays inline */
+      animation: floatUp 7.7s linear infinite;
+    }
+    /* We’ll define multiple balloon colors below */
+    /* Cake (Emoji) dropping from top */
+    #cakeEmoji {
+      position: absolute;
+      top: -200px;  /* hidden above the screen */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 100px;  /* big cake emoji */
+      animation: none;   /* will be triggered in JS */
+      z-index: 10;
+    }
+    @keyframes dropCake {
+      0%   { top: -200px; }
+      100% { top: 150px; }
+    }
+
+    /* Page 5: Video styling, etc. */
+    #page5 video {
+      max-width: 100%;
+      height: auto;
+      border: 3px solid #a9446b;
+      border-radius: 10px;
+    }
+
+    /* Page 7: Terms & Conditions */
+    #termsContainer {
+      margin: 20px;
+      font-size: 1.2em;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    /* BACKGROUND COLORS FOR EACH PAGE */
+    #page1 { background: #ffeef8; }
+    #page2 { background: #ffdde1; }
+    /* page3 is #ffd7e3 (defined above) */
+    #page4 { background: #ffc0cb; }
+    #page5 { background: #ffb6c1; }
+    #page6 { background: #ff9aa2; }
+    #page7 { background: #ff87a3; }
+    #page8 { background: #ffe6f0; }
+    #page9 { background: #fff0f5; }
+    #page10 { background: #fff0f5; }
+  </style>
+</head>
+<body>
+  <!-- ANIMATED EMOJI BACKGROUND -->
+  <div id="bgEmoji"></div>
+
+  <!-- PAGE 1: GREETING -->
+  <div id="page1" class="page visible">
+    <h1>Hey Darling!</h1>
+      <p>❤️❤️</p>
+    <button id="floatButton">Click Here</button>
+  </div>
+
+  <!-- PAGE 2: BIRTHDAY MESSAGE -->
+  <div id="page2" class="page">
+    <h1>Happy Birthday, Meri Jaan!</h1>
+    <p>
+      You are beautiful, mesmerizing, wonderful, and such a great person.
+      Even if you forget things and mix up plans, your charm lights up my world.
+    </p>
+    <p>Want a little more surprise?</p>
+    <div id="yesContainer">
+      <button class="yesBtn" id="yesBtn1" style="top: 20%; left: 25%;">Yes</button>
+      <button class="yesBtn" id="yesBtn2" style="top: 20%; left: 60%;">Yes</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: BALLOONS & CAKE -->
+  <div id="page3" class="page">
+    <h1>Balloons for You!</h1>
+		
+		
+		
+    <!-- CAKE EMOJI (HIDDEN ABOVE) -->
+    <div id="cakeEmoji">🎂</div>
+
+    <!-- 10 Balloons, each with random left positions & random delays -->
+    <!-- Speed: 7.7s, with random animation-delay so they don't all start together -->
+    <div class="balloon" id="balloon1"
+         style="left:10%; animation-delay:1s; background:#ff8a80;"></div>
+    <div class="balloon" id="balloon2"
+         style="left:25%; animation-delay:3s; background:#ffd180;"></div>
+    <div class="balloon" id="balloon3"
+         style="left:40%; animation-delay:0.5s; background:#80d8ff;"></div>
+    <div class="balloon" id="balloon4"
+         style="left:55%; animation-delay:2s; background:#b9f6ca;"></div>
+    <div class="balloon" id="balloon5"
+         style="left:70%; animation-delay:4s; background:#f48fb1;"></div>
+    <div class="balloon" id="balloon6"
+         style="left:15%; animation-delay:1.5s; background:#ffcc80;"></div>
+    <div class="balloon" id="balloon7"
+         style="left:35%; animation-delay:2.5s; background:#8c9eff;"></div>
+    <div class="balloon" id="balloon8"
+         style="left:50%; animation-delay:3.5s; background:#b388ff;"></div>
+    <div class="balloon" id="balloon9"
+         style="left:65%; animation-delay:1s; background:#ffe57f;"></div>
+    <div class="balloon" id="balloon10"
+         style="left:80%; animation-delay:2s; background:#ff9e80;"></div>
+
+    <!-- NEXT BUTTON (HIDDEN UNTIL CAKE DROPS) -->
+    <button id="cakeNextBtn" style="display: none;">Next</button>
+  </div>
+
+  <!-- PAGE 4: QUIZ OPTIONS (old Page 3) -->
+  <div id="page4" class="page">
+    <h1>Choose from the following</h1>
+    <div>
+      <button class="optionBtn" data-option="1">1. Tell Bikash first in the world my neet result</button><br>
+      <button class="optionBtn" data-option="2">2. Either bbsr or bdk we r going to have fun</button><br>
+      <button class="optionBtn" data-option="3">3. Watch movie yeh jawani and laila majnu</button><br>
+      <button class="optionBtn" data-option="4">4. First mein jab bhi do din ka chuti ho we r going to trampoline park</button><br>
+      <button class="optionBtn" data-option="5">5. All of the above</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: A LITTLE LOVE NOTE (old Page 4) -->
+  <div id="page5" class="page">
+    <h1>A Little Love Note</h1>
+    <p>
+      Darling, every moment with you is a cherished memory. From our silly laughs to our heartfelt conversations, you make life magical.
+      I still remember our first smile and how it lit up my day!
+    </p>
+    <p>Your love fills my heart and makes every day brighter.</p>
+    <button id="loveContinueBtn">I Love You More</button>
+  </div>
+
+  <!-- PAGE 6: VIDEO PAGE (old Page 5) -->
+  <div id="page6" class="page">
+    <h1>A Special Video For You</h1>
+     <video controls poster="birthday-poster.jpg" style="width: 80%; margin: 20px auto;">
+  <source src="monaday-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+    <button id="videoNextBtn">Next</button>
+  </div>
+
+  <!-- PAGE 7: TERMS & CONDITIONS (old Page 6) -->
+  <div id="page7" class="page">
+    <h1>Terms and Conditions</h1>
+    <p>You agree to all the terms and conditions of King Bikash</p>
+    <div id="termsContainer">
+      <input type="checkbox" id="termsCheckbox">
+      <label for="termsCheckbox">I agree to the terms and conditions</label>
+    </div>
+    <button id="continueBtn" disabled>Press to Continue</button>
+  </div>
+
+  <!-- PAGE 8: SENDING HUGS & KISSES (old Page 7) -->
+  <div id="page8" class="page">
+    <h1>Sending Hugs &amp; Kisses</h1>
+    <p>
+      Darling, every hug carries a piece of my heart and every kiss whispers how much I adore you.
+    </p>
+    <button id="page8Btn">Next</button>
+  </div>
+
+  <!-- PAGE 9: A SPECIAL PROMISE (old Page 8) -->
+  <div id="page9" class="page">
+    <h1>A Special Promise</h1>
+    <p>
+      I promise to always cherish you, to laugh with you in good times, and to hold you close during the storms.
+    </p>
+    <button id="page9Btn">Continue</button>
+  </div>
+
+  <!-- PAGE 10: FINAL MESSAGE (old Page 9) -->
+  <div id="page10" class="page">
+    <h1>Happy Birthday Once Again!</h1>
+    <p>
+      Darling, you mean the world to me. I love you, miss you so much, and can’t wait to see you soon.
+    </p>
+  </div>
+
+  <script>
+    /***************************************************************
+     * PAGE 1: Floating "Click Here" Button
+     ***************************************************************/
+    const floatButton = document.getElementById('floatButton');
+    let floatCount = 0;
+    function moveFloatButton() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const newX = Math.random() * (vw - 120);
+      const newY = Math.random() * (vh - 60);
+      floatButton.style.left = newX + 'px';
+      floatButton.style.top = newY + 'px';
+    }
+    floatButton.addEventListener('click', () => {
+      floatCount++;
+      if (floatCount < 4) {
+        moveFloatButton();
+      } else {
+        document.getElementById('page1').classList.remove('visible');
+        document.getElementById('page2').classList.add('visible');
+      }
+    });
+
+    /***************************************************************
+     * PAGE 2: Floating "Yes" Buttons
+     ***************************************************************/
+    const yesBtn1 = document.getElementById('yesBtn1');
+    const yesBtn2 = document.getElementById('yesBtn2');
+    let yesTotalClicks = 0;
+    function moveButtonIndependently(btn) {
+      const container = document.getElementById('yesContainer');
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      const newX = Math.random() * (containerWidth - 100);
+      const newY = Math.random() * (containerHeight - 40);
+      btn.style.left = newX + 'px';
+      btn.style.top = newY + 'px';
+    }
+    yesBtn1.addEventListener('click', () => {
+      yesTotalClicks++;
+      moveButtonIndependently(yesBtn1);
+      if (yesTotalClicks >= 4) {
+        document.getElementById('page2').classList.remove('visible');
+        document.getElementById('page3').classList.add('visible');
+      }
+    });
+    yesBtn2.addEventListener('click', () => {
+      yesTotalClicks++;
+      moveButtonIndependently(yesBtn2);
+      if (yesTotalClicks >= 4) {
+        document.getElementById('page2').classList.remove('visible');
+        document.getElementById('page3').classList.add('visible');
+      }
+    });
+
+    /***************************************************************
+     * PAGE 3: Balloons & Cake
+     ***************************************************************/
+    // We'll track how many balloons have been clicked
+    let balloonClicks = 0;
+
+    // Grab all balloon elements
+    const balloonElems = [
+      document.getElementById('balloon1'),
+      document.getElementById('balloon2'),
+      document.getElementById('balloon3'),
+      document.getElementById('balloon4'),
+      document.getElementById('balloon5'),
+      document.getElementById('balloon6'),
+      document.getElementById('balloon7'),
+      document.getElementById('balloon8'),
+      document.getElementById('balloon9'),
+      document.getElementById('balloon10')
+    ];
+
+    const cakeEmoji = document.getElementById('cakeEmoji');
+    const cakeNextBtn = document.getElementById('cakeNextBtn');
+
+    // Add click listeners to each balloon
+    balloonElems.forEach((balloon) => {
+      balloon.addEventListener('click', () => {
+        balloon.style.display = 'none';  // Hide that balloon
+        balloonClicks++;
+        // Once user has clicked on at least 4 balloons, drop the cake
+        if (balloonClicks === 4) {
+          dropCakeEmoji();
+        }
+      });
+    });
+
+    function dropCakeEmoji() {
+      // Start the drop animation
+      cakeEmoji.style.animation = 'dropCake 1.5s forwards';
+      // Show "Next" button after cake finishes dropping
+      setTimeout(() => {
+        cakeNextBtn.style.display = 'inline-block';
+      }, 1500);
+    }
+
+    cakeNextBtn.addEventListener('click', () => {
+      document.getElementById('page3').classList.remove('visible');
+      document.getElementById('page4').classList.add('visible');
+    });
+
+    /***************************************************************
+     * PAGE 4: Quiz Options (old Page 3)
+     ***************************************************************/
+    const optionButtons = document.querySelectorAll('.optionBtn');
+    optionButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const selected = btn.getAttribute('data-option');
+        if (selected === '5') {
+          alert('Good for u darling');
+          document.getElementById('page4').classList.remove('visible');
+          document.getElementById('page5').classList.add('visible');
+        } else {
+          alert('Answer incorrect, try again');
+        }
+      });
+    });
+
+    /***************************************************************
+     * PAGE 5: A Little Love Note (old Page 4)
+     ***************************************************************/
+    const loveContinueBtn = document.getElementById('loveContinueBtn');
+    loveContinueBtn.addEventListener('click', () => {
+      document.getElementById('page5').classList.remove('visible');
+      document.getElementById('page6').classList.add('visible');
+    });
+
+    /***************************************************************
+     * PAGE 6: Video Page (old Page 5)
+     ***************************************************************/
+    const videoNextBtn = document.getElementById('videoNextBtn');
+    videoNextBtn.addEventListener('click', () => {
+      document.getElementById('page6').classList.remove('visible');
+      document.getElementById('page7').classList.add('visible');
+    });
+
+    /***************************************************************
+     * PAGE 7: Terms & Conditions (old Page 6)
+     ***************************************************************/
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    const continueBtn = document.getElementById('continueBtn');
+    termsCheckbox.addEventListener('change', () => {
+      continueBtn.disabled = !termsCheckbox.checked;
+    });
+    continueBtn.addEventListener('click', () => {
+      document.getElementById('page7').classList.remove('visible');
+      document.getElementById('page8').classList.add('visible');
+    });
+
+    /***************************************************************
+     * PAGE 8: Sending Hugs & Kisses (old Page 7)
+     ***************************************************************/
+    const page8Btn = document.getElementById('page8Btn');
+    page8Btn.addEventListener('click', () => {
+      document.getElementById('page8').classList.remove('visible');
+      document.getElementById('page9').classList.add('visible');
+    });
+
+    /***************************************************************
+     * PAGE 9: A Special Promise (old Page 8)
+     ***************************************************************/
+    const page9Btn = document.getElementById('page9Btn');
+    page9Btn.addEventListener('click', () => {
+      document.getElementById('page9').classList.remove('visible');
+      document.getElementById('page10').classList.add('visible');
+    });
+  </script>
+</body>
+</html>
