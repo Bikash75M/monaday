@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Surprise For You, Darling!</title>
+  <!-- Viewport meta tag for mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -36,7 +38,7 @@
       animation: floatEmojis 20s ease-in-out infinite;
     }
     #bgEmoji::after {
-      content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
+      content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
       white-space: pre;
     }
     @keyframes floatEmojis {
@@ -135,7 +137,7 @@
       background: #ffd7e3;  /* lighter pink background */
       overflow: hidden;     /* so balloons can float up */
     }
-    /* Balloons float 1.3x faster => original ~10s => ~7.5s or 7.7s */
+    /* Balloons float 1.3x faster => original ~10s => ~7.7s */
     @keyframes floatUp {
       0%   { transform: translateY(100vh); }
       100% { transform: translateY(-120vh); }
@@ -146,18 +148,17 @@
       height: 100px;
       border-radius: 50% 50% 45% 55%;
       cursor: pointer;
-      /* We'll set random left positions & delays inline */
+      /* Random left positions & delays set inline */
       animation: floatUp 7.7s linear infinite;
     }
-    /* We’ll define multiple balloon colors below */
     /* Cake (Emoji) dropping from top */
     #cakeEmoji {
       position: absolute;
-      top: -200px;  /* hidden above the screen */
+      top: -200px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 100px;  /* big cake emoji */
-      animation: none;   /* will be triggered in JS */
+      font-size: 100px;
+      animation: none;
       z-index: 10;
     }
     @keyframes dropCake {
@@ -195,6 +196,33 @@
     #page8 { background: #ffe6f0; }
     #page9 { background: #fff0f5; }
     #page10 { background: #fff0f5; }
+
+    /* MEDIA QUERIES FOR MOBILE DEVICES */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2em;
+      }
+      p {
+        font-size: 1em;
+        margin: 10px;
+      }
+      button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+      }
+      #floatButton {
+        left: calc(50% - 40px);
+      }
+      #yesContainer {
+        height: 150px;
+      }
+      .yesBtn {
+        padding: 8px 16px;
+      }
+      #cakeEmoji {
+        font-size: 80px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -204,7 +232,7 @@
   <!-- PAGE 1: GREETING -->
   <div id="page1" class="page visible">
     <h1>Hey Darling!</h1>
-      <p>❤️❤️</p>
+    <p>❤️❤️</p>
     <button id="floatButton">Click Here</button>
   </div>
 
@@ -225,40 +253,24 @@
   <!-- PAGE 3: BALLOONS & CAKE -->
   <div id="page3" class="page">
     <h1>Balloons for You!</h1>
-		
-		
-		
     <!-- CAKE EMOJI (HIDDEN ABOVE) -->
     <div id="cakeEmoji">🎂</div>
-
-    <!-- 10 Balloons, each with random left positions & random delays -->
-    <!-- Speed: 7.7s, with random animation-delay so they don't all start together -->
-    <div class="balloon" id="balloon1"
-         style="left:10%; animation-delay:1s; background:#ff8a80;"></div>
-    <div class="balloon" id="balloon2"
-         style="left:25%; animation-delay:3s; background:#ffd180;"></div>
-    <div class="balloon" id="balloon3"
-         style="left:40%; animation-delay:0.5s; background:#80d8ff;"></div>
-    <div class="balloon" id="balloon4"
-         style="left:55%; animation-delay:2s; background:#b9f6ca;"></div>
-    <div class="balloon" id="balloon5"
-         style="left:70%; animation-delay:4s; background:#f48fb1;"></div>
-    <div class="balloon" id="balloon6"
-         style="left:15%; animation-delay:1.5s; background:#ffcc80;"></div>
-    <div class="balloon" id="balloon7"
-         style="left:35%; animation-delay:2.5s; background:#8c9eff;"></div>
-    <div class="balloon" id="balloon8"
-         style="left:50%; animation-delay:3.5s; background:#b388ff;"></div>
-    <div class="balloon" id="balloon9"
-         style="left:65%; animation-delay:1s; background:#ffe57f;"></div>
-    <div class="balloon" id="balloon10"
-         style="left:80%; animation-delay:2s; background:#ff9e80;"></div>
-
+    <!-- 10 Balloons with random left positions & delays -->
+    <div class="balloon" id="balloon1" style="left:10%; animation-delay:1s; background:#ff8a80;"></div>
+    <div class="balloon" id="balloon2" style="left:25%; animation-delay:3s; background:#ffd180;"></div>
+    <div class="balloon" id="balloon3" style="left:40%; animation-delay:0.5s; background:#80d8ff;"></div>
+    <div class="balloon" id="balloon4" style="left:55%; animation-delay:2s; background:#b9f6ca;"></div>
+    <div class="balloon" id="balloon5" style="left:70%; animation-delay:4s; background:#f48fb1;"></div>
+    <div class="balloon" id="balloon6" style="left:15%; animation-delay:1.5s; background:#ffcc80;"></div>
+    <div class="balloon" id="balloon7" style="left:35%; animation-delay:2.5s; background:#8c9eff;"></div>
+    <div class="balloon" id="balloon8" style="left:50%; animation-delay:3.5s; background:#b388ff;"></div>
+    <div class="balloon" id="balloon9" style="left:65%; animation-delay:1s; background:#ffe57f;"></div>
+    <div class="balloon" id="balloon10" style="left:80%; animation-delay:2s; background:#ff9e80;"></div>
     <!-- NEXT BUTTON (HIDDEN UNTIL CAKE DROPS) -->
     <button id="cakeNextBtn" style="display: none;">Next</button>
   </div>
 
-  <!-- PAGE 4: QUIZ OPTIONS (old Page 3) -->
+  <!-- PAGE 4: QUIZ OPTIONS -->
   <div id="page4" class="page">
     <h1>Choose from the following</h1>
     <div>
@@ -270,7 +282,7 @@
     </div>
   </div>
 
-  <!-- PAGE 5: A LITTLE LOVE NOTE (old Page 4) -->
+  <!-- PAGE 5: A LITTLE LOVE NOTE -->
   <div id="page5" class="page">
     <h1>A Little Love Note</h1>
     <p>
@@ -281,17 +293,17 @@
     <button id="loveContinueBtn">I Love You More</button>
   </div>
 
-  <!-- PAGE 6: VIDEO PAGE (old Page 5) -->
+  <!-- PAGE 6: VIDEO PAGE -->
   <div id="page6" class="page">
     <h1>A Special Video For You</h1>
-     <video controls poster="birthday-poster.jpg" style="width: 80%; margin: 20px auto;">
-  <source src="monaday-video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+    <video controls poster="birthday-poster.jpg" style="width: 80%; margin: 20px auto;">
+      <source src="monaday-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
     <button id="videoNextBtn">Next</button>
   </div>
 
-  <!-- PAGE 7: TERMS & CONDITIONS (old Page 6) -->
+  <!-- PAGE 7: TERMS & CONDITIONS -->
   <div id="page7" class="page">
     <h1>Terms and Conditions</h1>
     <p>You agree to all the terms and conditions of King Bikash</p>
@@ -302,7 +314,7 @@
     <button id="continueBtn" disabled>Press to Continue</button>
   </div>
 
-  <!-- PAGE 8: SENDING HUGS & KISSES (old Page 7) -->
+  <!-- PAGE 8: SENDING HUGS & KISSES -->
   <div id="page8" class="page">
     <h1>Sending Hugs &amp; Kisses</h1>
     <p>
@@ -311,7 +323,7 @@
     <button id="page8Btn">Next</button>
   </div>
 
-  <!-- PAGE 9: A SPECIAL PROMISE (old Page 8) -->
+  <!-- PAGE 9: A SPECIAL PROMISE -->
   <div id="page9" class="page">
     <h1>A Special Promise</h1>
     <p>
@@ -320,7 +332,7 @@
     <button id="page9Btn">Continue</button>
   </div>
 
-  <!-- PAGE 10: FINAL MESSAGE (old Page 9) -->
+  <!-- PAGE 10: FINAL MESSAGE -->
   <div id="page10" class="page">
     <h1>Happy Birthday Once Again!</h1>
     <p>
@@ -387,10 +399,7 @@
     /***************************************************************
      * PAGE 3: Balloons & Cake
      ***************************************************************/
-    // We'll track how many balloons have been clicked
     let balloonClicks = 0;
-
-    // Grab all balloon elements
     const balloonElems = [
       document.getElementById('balloon1'),
       document.getElementById('balloon2'),
@@ -403,38 +412,30 @@
       document.getElementById('balloon9'),
       document.getElementById('balloon10')
     ];
-
     const cakeEmoji = document.getElementById('cakeEmoji');
     const cakeNextBtn = document.getElementById('cakeNextBtn');
-
-    // Add click listeners to each balloon
     balloonElems.forEach((balloon) => {
       balloon.addEventListener('click', () => {
-        balloon.style.display = 'none';  // Hide that balloon
+        balloon.style.display = 'none';
         balloonClicks++;
-        // Once user has clicked on at least 4 balloons, drop the cake
         if (balloonClicks === 4) {
           dropCakeEmoji();
         }
       });
     });
-
     function dropCakeEmoji() {
-      // Start the drop animation
       cakeEmoji.style.animation = 'dropCake 1.5s forwards';
-      // Show "Next" button after cake finishes dropping
       setTimeout(() => {
         cakeNextBtn.style.display = 'inline-block';
       }, 1500);
     }
-
     cakeNextBtn.addEventListener('click', () => {
       document.getElementById('page3').classList.remove('visible');
       document.getElementById('page4').classList.add('visible');
     });
 
     /***************************************************************
-     * PAGE 4: Quiz Options (old Page 3)
+     * PAGE 4: Quiz Options
      ***************************************************************/
     const optionButtons = document.querySelectorAll('.optionBtn');
     optionButtons.forEach((btn) => {
@@ -451,7 +452,7 @@
     });
 
     /***************************************************************
-     * PAGE 5: A Little Love Note (old Page 4)
+     * PAGE 5: A Little Love Note
      ***************************************************************/
     const loveContinueBtn = document.getElementById('loveContinueBtn');
     loveContinueBtn.addEventListener('click', () => {
@@ -460,7 +461,7 @@
     });
 
     /***************************************************************
-     * PAGE 6: Video Page (old Page 5)
+     * PAGE 6: Video Page
      ***************************************************************/
     const videoNextBtn = document.getElementById('videoNextBtn');
     videoNextBtn.addEventListener('click', () => {
@@ -469,7 +470,7 @@
     });
 
     /***************************************************************
-     * PAGE 7: Terms & Conditions (old Page 6)
+     * PAGE 7: Terms & Conditions
      ***************************************************************/
     const termsCheckbox = document.getElementById('termsCheckbox');
     const continueBtn = document.getElementById('continueBtn');
@@ -482,7 +483,7 @@
     });
 
     /***************************************************************
-     * PAGE 8: Sending Hugs & Kisses (old Page 7)
+     * PAGE 8: Sending Hugs & Kisses
      ***************************************************************/
     const page8Btn = document.getElementById('page8Btn');
     page8Btn.addEventListener('click', () => {
@@ -491,7 +492,7 @@
     });
 
     /***************************************************************
-     * PAGE 9: A Special Promise (old Page 8)
+     * PAGE 9: A Special Promise
      ***************************************************************/
     const page9Btn = document.getElementById('page9Btn');
     page9Btn.addEventListener('click', () => {
