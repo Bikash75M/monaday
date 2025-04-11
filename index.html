@@ -6,7 +6,7 @@
   <!-- Viewport meta tag for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* GLOBAL RESET & BASIC SETUP */
     * {
@@ -19,6 +19,18 @@
       font-family: 'Roboto', sans-serif;
       position: relative;
       color: #4a2c2a;
+    }
+    /* Optional Background Effect */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, transparent 20%, #ffebf280 80%);
+      pointer-events: none;
+      z-index: -2;
     }
 
     /* ANIMATED EMOJI BACKGROUND */
@@ -38,13 +50,31 @@
       animation: floatEmojis 20s ease-in-out infinite;
     }
     #bgEmoji::after {
-      content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
+      content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
       white-space: pre;
     }
     @keyframes floatEmojis {
       0%   { transform: translate(0, 0); }
       50%  { transform: translate(20px, 20px); }
       100% { transform: translate(0, 0); }
+    }
+
+    /* HEART ANIMATIONS */
+    .heart {
+      position: absolute;
+      /* Increased font-size for bigger hearts */
+      font-size: 32px;
+      animation: floatHeart 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+    @keyframes popHeart {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
     }
 
     /* PAGE CONTAINERS (10 pages total) */
@@ -113,7 +143,6 @@
       cursor: pointer;
       transition: all 0.4s ease;
     }
-
     /* Page 2: Container for "Yes" Buttons */
     #yesContainer {
       position: relative;
@@ -131,13 +160,11 @@
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
-
     /* PAGE 3: BALLOONS & CAKE */
     #page3 {
       background: #ffd7e3;  /* lighter pink background */
       overflow: hidden;     /* so balloons can float up */
     }
-    /* Balloons float 1.3x faster => original ~10s => ~7.7s */
     @keyframes floatUp {
       0%   { transform: translateY(100vh); }
       100% { transform: translateY(-120vh); }
@@ -148,7 +175,6 @@
       height: 100px;
       border-radius: 50% 50% 45% 55%;
       cursor: pointer;
-      /* Random left positions & delays set inline */
       animation: floatUp 7.7s linear infinite;
     }
     /* Cake (Emoji) dropping from top */
@@ -165,7 +191,6 @@
       0%   { top: -200px; }
       100% { top: 150px; }
     }
-
     /* Page 5: Video styling, etc. */
     #page5 video {
       max-width: 100%;
@@ -173,7 +198,6 @@
       border: 3px solid #a9446b;
       border-radius: 10px;
     }
-
     /* Page 7: Terms & Conditions */
     #termsContainer {
       margin: 20px;
@@ -184,7 +208,6 @@
       margin-right: 10px;
       cursor: pointer;
     }
-
     /* BACKGROUND COLORS FOR EACH PAGE */
     #page1 { background: #ffeef8; }
     #page2 { background: #ffdde1; }
@@ -229,6 +252,13 @@
   <!-- ANIMATED EMOJI BACKGROUND -->
   <div id="bgEmoji"></div>
 
+  <!-- STATIC HEART ELEMENTS with Bigger Size -->
+  <div class="heart" style="left:10%; animation-delay:1s">💖</div>
+  <div class="heart" style="left:30%; animation-delay:2s">💕</div>
+  <div class="heart" style="left:50%; animation-delay:3s">💞</div>
+  <div class="heart" style="left:70%; animation-delay:4s">💓</div>
+
+  <!-- PAGE CONTENT -->
   <!-- PAGE 1: GREETING -->
   <div id="page1" class="page visible">
     <h1>Hey Darling!</h1>
@@ -342,8 +372,9 @@
 
   <script>
     /***************************************************************
-     * PAGE 1: Floating "Click Here" Button
+     * PAGE TRANSITION LOGIC
      ***************************************************************/
+    // PAGE 1: Floating "Click Here" Button
     const floatButton = document.getElementById('floatButton');
     let floatCount = 0;
     function moveFloatButton() {
@@ -364,9 +395,7 @@
       }
     });
 
-    /***************************************************************
-     * PAGE 2: Floating "Yes" Buttons
-     ***************************************************************/
+    // PAGE 2: Floating "Yes" Buttons
     const yesBtn1 = document.getElementById('yesBtn1');
     const yesBtn2 = document.getElementById('yesBtn2');
     let yesTotalClicks = 0;
@@ -396,9 +425,7 @@
       }
     });
 
-    /***************************************************************
-     * PAGE 3: Balloons & Cake
-     ***************************************************************/
+    // PAGE 3: Balloons & Cake
     let balloonClicks = 0;
     const balloonElems = [
       document.getElementById('balloon1'),
@@ -434,9 +461,7 @@
       document.getElementById('page4').classList.add('visible');
     });
 
-    /***************************************************************
-     * PAGE 4: Quiz Options
-     ***************************************************************/
+    // PAGE 4: Quiz Options
     const optionButtons = document.querySelectorAll('.optionBtn');
     optionButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -451,27 +476,21 @@
       });
     });
 
-    /***************************************************************
-     * PAGE 5: A Little Love Note
-     ***************************************************************/
+    // PAGE 5: A Little Love Note
     const loveContinueBtn = document.getElementById('loveContinueBtn');
     loveContinueBtn.addEventListener('click', () => {
       document.getElementById('page5').classList.remove('visible');
       document.getElementById('page6').classList.add('visible');
     });
 
-    /***************************************************************
-     * PAGE 6: Video Page
-     ***************************************************************/
+    // PAGE 6: Video Page
     const videoNextBtn = document.getElementById('videoNextBtn');
     videoNextBtn.addEventListener('click', () => {
       document.getElementById('page6').classList.remove('visible');
       document.getElementById('page7').classList.add('visible');
     });
 
-    /***************************************************************
-     * PAGE 7: Terms & Conditions
-     ***************************************************************/
+    // PAGE 7: Terms & Conditions
     const termsCheckbox = document.getElementById('termsCheckbox');
     const continueBtn = document.getElementById('continueBtn');
     termsCheckbox.addEventListener('change', () => {
@@ -482,22 +501,34 @@
       document.getElementById('page8').classList.add('visible');
     });
 
-    /***************************************************************
-     * PAGE 8: Sending Hugs & Kisses
-     ***************************************************************/
+    // PAGE 8: Sending Hugs & Kisses
     const page8Btn = document.getElementById('page8Btn');
     page8Btn.addEventListener('click', () => {
       document.getElementById('page8').classList.remove('visible');
       document.getElementById('page9').classList.add('visible');
     });
 
-    /***************************************************************
-     * PAGE 9: A Special Promise
-     ***************************************************************/
+    // PAGE 9: A Special Promise
     const page9Btn = document.getElementById('page9Btn');
     page9Btn.addEventListener('click', () => {
       document.getElementById('page9').classList.remove('visible');
       document.getElementById('page10').classList.add('visible');
+    });
+  </script>
+
+  <!-- ADDITIONAL INTERACTION: Pop hearts on mouse move -->
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.92) {
+        const heart = document.createElement('div');
+        heart.style.position = 'fixed';
+        heart.style.left = `${e.clientX}px`;
+        heart.style.top = `${e.clientY}px`;
+        heart.innerHTML = '💖';
+        heart.style.animation = 'popHeart 0.8s ease-out';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 800);
+      }
     });
   </script>
 </body>
