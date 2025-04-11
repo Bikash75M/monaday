@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Surprise For You, Darling!</title>
-  <!-- Viewport meta tag for mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Improved meta viewport for mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -19,6 +19,9 @@
       font-family: 'Roboto', sans-serif;
       position: relative;
       color: #4a2c2a;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior: none;
+      touch-action: manipulation;
     }
     /* Optional Background Effect */
     body::after {
@@ -48,33 +51,49 @@
       pointer-events: none;
       user-select: none;
       animation: floatEmojis 20s ease-in-out infinite;
+      -webkit-animation: floatEmojis 20s ease-in-out infinite;
+      will-change: transform;
     }
     #bgEmoji::after {
       content: "❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂\A❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂 ❤️ 🎂";
       white-space: pre;
     }
     @keyframes floatEmojis {
-      0%   { transform: translate(0, 0); }
-      50%  { transform: translate(20px, 20px); }
-      100% { transform: translate(0, 0); }
+      0%   { transform: translate3d(0, 0, 0); }
+      50%  { transform: translate3d(20px, 20px, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+    @-webkit-keyframes floatEmojis {
+      0%   { -webkit-transform: translate3d(0, 0, 0); }
+      50%  { -webkit-transform: translate3d(20px, 20px, 0); }
+      100% { -webkit-transform: translate3d(0, 0, 0); }
     }
 
     /* HEART ANIMATIONS */
     .heart {
       position: absolute;
-      /* Increased font-size for bigger hearts */
-      font-size: 32px;
+      font-size: 32px; /* Bigger hearts */
       animation: floatHeart 8s linear infinite;
+      -webkit-animation: floatHeart 8s linear infinite;
       pointer-events: none;
       z-index: 1;
+      will-change: transform, opacity;
     }
     @keyframes floatHeart {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+      0% { transform: translate3d(0, 100vh, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate3d(0, -20vh, 0) rotate(360deg); opacity: 0; }
+    }
+    @-webkit-keyframes floatHeart {
+      0% { -webkit-transform: translate3d(0, 100vh, 0) rotate(0deg); opacity: 1; }
+      100% { -webkit-transform: translate3d(0, -20vh, 0) rotate(360deg); opacity: 0; }
     }
     @keyframes popHeart {
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(3); opacity: 0; }
+    }
+    @-webkit-keyframes popHeart {
+      0% { -webkit-transform: scale(1); opacity: 1; }
+      100% { -webkit-transform: scale(3); opacity: 0; }
     }
 
     /* PAGE CONTAINERS (10 pages total) */
@@ -84,19 +103,23 @@
       position: absolute;
       top: 0;
       left: 0;
-      display: none;               /* hidden by default */
+      display: none;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 20px;
       opacity: 0;
       animation: fadeIn 0.8s forwards;
+      -webkit-animation: fadeIn 0.8s forwards;
     }
     .visible {
-      display: flex;               /* show the current page */
-      flex-direction: column;      /* stack items vertically */
+      display: flex;
+      flex-direction: column;
     }
     @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @-webkit-keyframes fadeIn {
       to { opacity: 1; }
     }
 
@@ -123,10 +146,12 @@
       font-size: 1em;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
+      -webkit-transition: background-color 0.3s ease, -webkit-transform 0.3s ease;
     }
     button:hover {
       background-color: #922c50;
       transform: scale(1.05);
+      -webkit-transform: scale(1.05);
     }
 
     /* PAGE-SPECIFIC STYLES */
@@ -142,6 +167,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: all 0.4s ease;
+      -webkit-transition: all 0.4s ease;
     }
     /* Page 2: Container for "Yes" Buttons */
     #yesContainer {
@@ -159,15 +185,20 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
+      -webkit-transition: background-color 0.3s ease, -webkit-transform 0.3s ease;
     }
     /* PAGE 3: BALLOONS & CAKE */
     #page3 {
-      background: #ffd7e3;  /* lighter pink background */
-      overflow: hidden;     /* so balloons can float up */
+      background: #ffd7e3;
+      overflow: hidden;
     }
     @keyframes floatUp {
-      0%   { transform: translateY(100vh); }
-      100% { transform: translateY(-120vh); }
+      0%   { transform: translate3d(0, 100vh, 0); }
+      100% { transform: translate3d(0, -120vh, 0); }
+    }
+    @-webkit-keyframes floatUp {
+      0%   { -webkit-transform: translate3d(0, 100vh, 0); }
+      100% { -webkit-transform: translate3d(0, -120vh, 0); }
     }
     .balloon {
       position: absolute;
@@ -176,6 +207,8 @@
       border-radius: 50% 50% 45% 55%;
       cursor: pointer;
       animation: floatUp 7.7s linear infinite;
+      -webkit-animation: floatUp 7.7s linear infinite;
+      will-change: transform;
     }
     /* Cake (Emoji) dropping from top */
     #cakeEmoji {
@@ -183,6 +216,7 @@
       top: -200px;
       left: 50%;
       transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
       font-size: 100px;
       animation: none;
       z-index: 10;
@@ -191,7 +225,11 @@
       0%   { top: -200px; }
       100% { top: 150px; }
     }
-    /* Page 5: Video styling, etc. */
+    @-webkit-keyframes dropCake {
+      0%   { top: -200px; }
+      100% { top: 150px; }
+    }
+    /* Page 5: Video styling */
     #page5 video {
       max-width: 100%;
       height: auto;
@@ -205,13 +243,13 @@
     }
     input[type="checkbox"] {
       transform: scale(1.5);
+      -webkit-transform: scale(1.5);
       margin-right: 10px;
       cursor: pointer;
     }
     /* BACKGROUND COLORS FOR EACH PAGE */
     #page1 { background: #ffeef8; }
     #page2 { background: #ffdde1; }
-    /* page3 is #ffd7e3 (defined above) */
     #page4 { background: #ffc0cb; }
     #page5 { background: #ffb6c1; }
     #page6 { background: #ff9aa2; }
@@ -220,7 +258,7 @@
     #page9 { background: #fff0f5; }
     #page10 { background: #fff0f5; }
 
-    /* MEDIA QUERIES FOR MOBILE DEVICES */
+    /* MEDIA QUERIES: Further optimize on smaller devices */
     @media (max-width: 480px) {
       h1 {
         font-size: 2em;
@@ -244,6 +282,12 @@
       }
       #cakeEmoji {
         font-size: 80px;
+      }
+      /* Option to reduce the opacity/animation intensity for better performance */
+      #bgEmoji {
+        opacity: 0.1;
+        animation-duration: 25s;
+        -webkit-animation-duration: 25s;
       }
     }
   </style>
@@ -283,9 +327,7 @@
   <!-- PAGE 3: BALLOONS & CAKE -->
   <div id="page3" class="page">
     <h1>Balloons for You!</h1>
-    <!-- CAKE EMOJI (HIDDEN ABOVE) -->
     <div id="cakeEmoji">🎂</div>
-    <!-- 10 Balloons with random left positions & delays -->
     <div class="balloon" id="balloon1" style="left:10%; animation-delay:1s; background:#ff8a80;"></div>
     <div class="balloon" id="balloon2" style="left:25%; animation-delay:3s; background:#ffd180;"></div>
     <div class="balloon" id="balloon3" style="left:40%; animation-delay:0.5s; background:#80d8ff;"></div>
@@ -296,7 +338,6 @@
     <div class="balloon" id="balloon8" style="left:50%; animation-delay:3.5s; background:#b388ff;"></div>
     <div class="balloon" id="balloon9" style="left:65%; animation-delay:1s; background:#ffe57f;"></div>
     <div class="balloon" id="balloon10" style="left:80%; animation-delay:2s; background:#ff9e80;"></div>
-    <!-- NEXT BUTTON (HIDDEN UNTIL CAKE DROPS) -->
     <button id="cakeNextBtn" style="display: none;">Next</button>
   </div>
 
@@ -516,20 +557,27 @@
     });
   </script>
 
-  <!-- ADDITIONAL INTERACTION: Pop hearts on mouse move -->
+  <!-- POP HEART EFFECT ON MOUSEMOVE / TOUCHMOVE -->
   <script>
-    document.addEventListener('mousemove', (e) => {
+    // Use a combined event handler for both mouse and touch move
+    function popHeart(e) {
+      // Support both touch and mouse events
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       if (Math.random() > 0.92) {
         const heart = document.createElement('div');
         heart.style.position = 'fixed';
-        heart.style.left = `${e.clientX}px`;
-        heart.style.top = `${e.clientY}px`;
+        heart.style.left = clientX + 'px';
+        heart.style.top = clientY + 'px';
         heart.innerHTML = '💖';
         heart.style.animation = 'popHeart 0.8s ease-out';
+        heart.style.webkitAnimation = 'popHeart 0.8s ease-out';
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 800);
       }
-    });
+    }
+    document.addEventListener('mousemove', popHeart);
+    document.addEventListener('touchmove', popHeart);
   </script>
 </body>
 </html>
